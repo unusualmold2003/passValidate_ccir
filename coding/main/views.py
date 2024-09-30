@@ -11,7 +11,9 @@ def password_validator(request):
     return render(request, 'password_validator.html')
 
 def validate_password(password):
-    # Add your password validation logic here
+    password = request.GET.get('password', '')
+    result = zxcvbn(password)
+    return JsonResponse(result)
     if len(password) < 8:
         return False
     if not any(char.isdigit() for char in password):
